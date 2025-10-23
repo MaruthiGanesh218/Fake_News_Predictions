@@ -1,10 +1,10 @@
-# NEWS CHUNK 1 — Project Bootstrap
-# Author: GPT-5 Codecs (acting as a 30–40 year experienced software engineer)
-# Behavior: You have full write access. Create files, run checks, save results. Prefer correctness, clarity and reproducibility.
+# FAKE NEWS PREDICTION 
+# Author: tejash
+
 
 # Fake News Prediction (Online Phase)
 
-This repository hosts a staged build-out for a fake news prediction platform. NEWS CHUNK 1 establishes the baseline structure with separate frontend and backend services plus repeatable verification tooling.
+This repository hosts a staged build-out for a fake news prediction platform. 
 
 ## Getting Started
 
