@@ -1,0 +1,20 @@
+
+[2025-10-23T13:25:00] Detected node: v22.19.0
+[2025-10-23T13:25:00] Detected npm: detected
+[2025-10-23T13:25:01] Candidate python3 did not return a valid python version: Python was not found; run without arguments to install from the Microsoft Store, or disable this shortcut from Settings > Apps > Advanced app settings > App execution aliases.
+[2025-10-23T13:25:01] Candidate python did not return a valid python version: File "<string>", line 1
+    import
+          ^
+SyntaxError: invalid syntax
+[2025-10-23T13:25:01] Candidate py did not return a valid python version: File "<string>", line 1
+    import
+          ^
+SyntaxError: Expected one or more names after 'import'
+[2025-10-23T13:25:01] Python unavailable; skipping Python-powered checks.
+[2025-10-23T13:25:01] Checking backend health at http://127.0.0.1:8000/health
+[2025-10-23T13:25:01] Posting payload to http://127.0.0.1:8000/check-news
+[2025-10-23T13:25:01] Testing CORS preflight for http://127.0.0.1:8000/check-news
+[2025-10-23T13:25:01] Performing browser-style request to http://127.0.0.1:8000/check-news
+[2025-10-23T13:25:01] Detected base URL from api.js: http://localhost:8000
+[2025-10-23T13:25:01] Backend health details recorded: http://127.0.0.1:8000/health responded with status ok
+[2025-10-23T13:25:01] Connectivity verification completed with status pass

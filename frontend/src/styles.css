@@ -1,0 +1,89 @@
+/* NEWS CHUNK 1 — Project Bootstrap */
+/* Author: GPT-5 Codecs (acting as a 30–40 year experienced software engineer) */
+/* Behavior: You have full write access. Create files, run checks, save results. Prefer correctness, clarity and reproducibility. */
+
+:root {
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  color-scheme: light dark;
+  background-color: #0f172a;
+  color: #e2e8f0;
+}
+
+body {
+  margin: 0;
+}
+
+.app-shell {
+  margin: 0 auto;
+  max-width: 768px;
+  padding: 2rem 1.25rem 4rem;
+}
+
+header {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+header h1 {
+  margin-bottom: 0.5rem;
+}
+
+main {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.input-card,
+.result-card {
+  background-color: rgba(148, 163, 184, 0.1);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.35);
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+textarea {
+  width: 100%;
+  min-height: 160px;
+  padding: 0.75rem;
+  border-radius: 10px;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  resize: vertical;
+  background-color: rgba(15, 23, 42, 0.85);
+  color: inherit;
+}
+
+button {
+  margin-top: 1rem;
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #38bdf8 0%, #8b5cf6 100%);
+  color: #0f172a;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease-in-out, filter 0.15s ease-in-out;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  filter: grayscale(0.4);
+  opacity: 0.6;
+}
+
+button:not(:disabled):hover {
+  transform: translateY(-1px);
+  filter: brightness(1.1);
+}
+
+.result-card p {
+  margin: 0.5rem 0;
+}
+
+/* TODO: Evaluate Tailwind CSS once design requirements stabilize. */

@@ -1,0 +1,12 @@
+Metadata-Version: 2.4
+Name: fake-news-prediction-backend
+Version: 0.0.1
+Summary: FastAPI backend scaffold for the fake news prediction project.
+Requires-Python: >=3.10
+Requires-Dist: fastapi<1.0.0,>=0.110.0
+Requires-Dist: uvicorn[standard]<1.0.0,>=0.29.0
+Requires-Dist: python-dotenv<2.0.0,>=1.0.1
+Requires-Dist: httpx<1.0.0,>=0.27.0
+Requires-Dist: pytest<9.0.0,>=8.2.0
+Requires-Dist: pytest-asyncio<1.0.0,>=0.23.0
+Requires-Dist: respx<1.0.0,>=0.20.2

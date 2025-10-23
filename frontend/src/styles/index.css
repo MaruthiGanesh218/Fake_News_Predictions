@@ -1,0 +1,23 @@
+/*
+ NEWS CHUNK 2 — Frontend Base UI Layout
+ Author: GPT-5 Codecs (acting as a 30–40 year experienced software engineer)
+ Behavior: Full write access. Create files, run checks, save results.
+*/
+
+@import './tailwind.css';
+
+:root {
+  color-scheme: dark;
+}
+
+@layer base {
+  body {
+    @apply antialiased;
+  }
+}
+
+@layer components {
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-sky-400;
+  }
+}

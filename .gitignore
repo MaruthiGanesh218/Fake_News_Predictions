@@ -1,0 +1,13 @@
+# NEWS CHUNK 1 — Project Bootstrap
+# Author: GPT-5 Codecs (acting as a 30–40 year experienced software engineer)
+# Behavior: You have full write access. Create files, run checks, save results. Prefer correctness, clarity and reproducibility.
+
+node_modules/
+dist/
+.venv/
+__pycache__/
+.env
+*.pyc
+frontend/node_modules/
+frontend/dist/
+backend/.venv/

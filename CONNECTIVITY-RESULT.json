@@ -1,0 +1,41 @@
+{
+  "timestamp": "2025-10-23T07:55:00.6182969Z",
+  "backend_health": {
+    "raw": "{\r\n  \"status\": \"ok\"\r\n}",
+    "status": "pass",
+    "details": "http://127.0.0.1:8000/health responded with status ok"
+  },
+  "backend_checknews": {
+    "response": "{\r\n  \"verdict\": \"unsure\",\r\n  \"confidence\": 0.6,\r\n  \"evidence\": [],\r\n  \"sources\": [],\r\n  \"claim_reviews\": [],\r\n  \"classifier\": {\r\n    \"provider\": \"local\",\r\n    \"score\": 0.5,\r\n    \"explanation\": \"Configured to use local classifier\"\r\n  },\r\n  \"notes\": \"This is a mock response from NEWS CHUNK 7. Fact-check and classifier verdicts are promoted when live integrations are active. News provider credentials missing: Missing API credentials for provider 'newsapi'.. Classifier provider local executed. Verdict blended classifier and news heuristics.\"\r\n}",
+    "status": "pass",
+    "details": "http://127.0.0.1:8000/check-news returned verdict"
+  },
+  "cors": {
+    "headers": "Date: Thu, 23 Oct 2025 07:55:01 GMT\nServer: uvicorn\nVary: Origin\nAccess-Control-Allow-Methods: DELETE, GET, HEAD, OPTIONS, PATCH, POST, PUT\nAccess-Control-Max-Age: 600\nAccess-Control-Allow-Credentials: true\nAccess-Control-Allow-Origin: http://localhost:5173",
+    "status": "pass",
+    "allowed_config": "",
+    "details": "Preflight succeeded for http://localhost:5173"
+  },
+  "frontend_env": {
+    "detected_base": "http://localhost:8000",
+    "status": "pass",
+    "details": "Detected API base http://localhost:8000"
+  },
+  "e2e": {
+    "response": "{\"verdict\":\"unsure\",\"confidence\":0.6,\"evidence\":[],\"sources\":[],\"claim_reviews\":[],\"classifier\":{\"provider\":\"local\",\"score\":0.5,\"explanation\":\"Configured to use local classifier\"},\"notes\":\"This is a mock response from NEWS CHUNK 7. Fact-check and classifier verdicts are promoted when live integrations are active. News provider credentials missing: Missing API credentials for provider 'newsapi'.. Classifier provider local executed. Verdict blended classifier and news heuristics.\"}",
+    "status": "pass",
+    "details": "Browser-style request succeeded at http://127.0.0.1:8000/check-news"
+  },
+  "prereqs": {
+    "uvicorn": "missing",
+    "node": "v22.19.0",
+    "npm": "detected",
+    "python": "missing"
+  },
+  "recommendations": [
+    "Install Python 3.10+ and ensure it is available in PATH.",
+    "Install uvicorn via 'pip install uvicorn[standard]' to run the backend server."
+  ],
+  "status": "pass"
+}
+

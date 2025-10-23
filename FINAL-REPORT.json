@@ -1,0 +1,106 @@
+{
+  "project": "Fake News Prediction (Online Phase)",
+  "generated_at": "2025-10-22T10:05:39.351806+00:00",
+  "chunks": [
+    {
+      "chunk": "NEWS CHUNK 3",
+      "status": "pass",
+      "timestamp": "2025-10-21T19:51:53+05:30",
+      "path": "backend/CHUNK-03/RESULT.json"
+    },
+    {
+      "chunk": "NEWS CHUNK 5",
+      "status": "pass",
+      "timestamp": "2025-10-21T22:28:43+05:30",
+      "path": "backend/CHUNK-05/RESULT.json"
+    },
+    {
+      "chunk": "NEWS CHUNK 6",
+      "status": "pass",
+      "timestamp": "2025-10-21T17:45:00Z",
+      "path": "backend/CHUNK-06/RESULT.json"
+    },
+    {
+      "chunk": "NEWS CHUNK 7",
+      "status": "fail",
+      "timestamp": "2025-10-21T18:05:00Z",
+      "path": "backend/CHUNK-07/RESULT.json"
+    },
+    {
+      "chunk": "NEWS CHUNK 9",
+      "status": "pass",
+      "timestamp": "2025-10-21T20:20:01.749668+00:00",
+      "path": "backend/CHUNK-09/RESULT.json"
+    },
+    {
+      "chunk": "NEWS CHUNK 1",
+      "status": "pass",
+      "timestamp": "2025-10-21T19:00:25+05:30",
+      "path": "CHUNK-01/RESULT.json"
+    },
+    {
+      "chunk": "NEWS CHUNK 9",
+      "status": "pass",
+      "timestamp": "2025-10-21T20:19:11.259812+00:00",
+      "path": "frontend/backend/CHUNK-09/RESULT.json"
+    },
+    {
+      "chunk": "NEWS CHUNK 2",
+      "status": "pass",
+      "timestamp": "2025-10-21T19:21:03+05:30",
+      "path": "frontend/CHUNK-02/RESULT.json"
+    },
+    {
+      "chunk": "NEWS CHUNK 4",
+      "status": "pass",
+      "timestamp": "2025-10-21T20:15:32+05:30",
+      "path": "frontend/CHUNK-04/RESULT.json"
+    },
+    {
+      "chunk": "NEWS CHUNK 5",
+      "status": "pass",
+      "timestamp": "2025-10-21T22:28:43+05:30",
+      "path": "frontend/CHUNK-05/RESULT.json"
+    },
+    {
+      "chunk": "NEWS CHUNK 6",
+      "status": "pass",
+      "timestamp": "2025-10-21T17:45:00Z",
+      "path": "frontend/CHUNK-06/RESULT.json"
+    },
+    {
+      "chunk": "NEWS CHUNK 7",
+      "status": "fail",
+      "timestamp": "2025-10-21T18:05:00Z",
+      "path": "frontend/CHUNK-07/RESULT.json"
+    },
+    {
+      "chunk": "NEWS CHUNK 8",
+      "status": "pass",
+      "timestamp": "2025-10-21T19:03:20Z",
+      "path": "frontend/CHUNK-08/RESULT.json"
+    },
+    {
+      "chunk": "NEWS CHUNK 9",
+      "status": "pass",
+      "timestamp": "2025-10-21T20:20:01.749668+00:00",
+      "path": "frontend/CHUNK-09/RESULT.json"
+    },
+    {
+      "chunk": "NEWS CHUNK 9",
+      "status": "pass",
+      "timestamp": "2025-10-21T20:19:11.259812+00:00",
+      "path": "frontend/frontend/CHUNK-09/RESULT.json"
+    }
+  ],
+  "overall_status": "fail",
+  "failed_chunks": [
+    "NEWS CHUNK 7",
+    "NEWS CHUNK 7"
+  ],
+  "deployed_urls": [],
+  "notes": [
+    "Manual Cloud Run deployment requires running deploy/gcloud_deploy.sh with authenticated gcloud credentials.",
+    "GitHub Actions deploy job remains gated by GCP secrets and environment approvals."
+  ]
+}

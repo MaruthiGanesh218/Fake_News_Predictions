@@ -1,0 +1,131 @@
+# NEWS CHUNK 10 — Deployment & Verification Automation
+# Author: GPT-5 Codecs (acting as a 30-40 year experienced software engineer)
+# Behavior: Full write access. Create files, run checks, save results.
+
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+env:
+  PYTHON_VERSION: "3.11"
+  NODE_VERSION: "18"
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: "pip"
+          cache-dependency-path: backend/pyproject.toml
+
+      - name: Install backend dependencies
+        working-directory: ./backend
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install .
+
+      - name: Run backend tests
+        working-directory: ./backend
+        run: python -m pytest -q
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        working-directory: ./frontend
+        run: npm ci --no-audit --fund=false
+
+      - name: Run frontend tests
+        working-directory: ./frontend
+        run: npm test -- --run
+
+      - name: Build backend Docker image
+        run: docker build ./backend --file ./backend/Dockerfile --tag fake-news-backend:ci
+
+      - name: Build frontend Docker image
+        run: docker build ./frontend --file ./frontend/Dockerfile --tag fake-news-frontend:ci
+
+      - name: Capture Docker metadata
+        if: always()
+        run: |
+          docker image inspect fake-news-backend:ci > backend-image.json
+          docker image inspect fake-news-frontend:ci > frontend-image.json
+
+      - name: Upload Docker build metadata
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-inspect
+          path: |
+            backend-image.json
+            frontend-image.json
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-test
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: production
+    concurrency:
+      group: cloud-run-production
+      cancel-in-progress: false
+    steps:
+      - name: Evaluate deployment prerequisites
+        id: prereq
+        shell: bash
+        run: |
+          missing=0
+          if [[ -z "${{ secrets.GCP_SA_KEY }}" ]]; then
+            echo "::warning::GCP_SA_KEY secret not configured; deployment will be skipped."
+            missing=1
+          fi
+          if [[ -z "${{ secrets.GCP_PROJECT }}" ]]; then
+            echo "::warning::GCP_PROJECT secret not configured; deployment will be skipped."
+            missing=1
+          fi
+          echo "missing=${missing}" >> "$GITHUB_OUTPUT"
+
+      - name: Checkout repository
+        if: steps.prereq.outputs.missing == '0'
+        uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        if: steps.prereq.outputs.missing == '0'
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up gcloud SDK
+        if: steps.prereq.outputs.missing == '0'
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.GCP_PROJECT }}
+
+      - name: Run deployment script
+        if: steps.prereq.outputs.missing == '0'
+        env:
+          GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
+          GCP_REGION: ${{ vars.GCP_REGION || 'us-central1' }}
+        run: |
+          chmod +x deploy/gcloud_deploy.sh deploy/smoke_tests/smoke_test.sh
+          ./deploy/gcloud_deploy.sh
+
+      - name: Mark deployment skipped
+        if: steps.prereq.outputs.missing != '0'
+        run: echo "Deployment skipped because required secrets are not configured."

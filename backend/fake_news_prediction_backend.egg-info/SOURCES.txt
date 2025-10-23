@@ -1,0 +1,16 @@
+pyproject.toml
+app/__init__.py
+app/config.py
+app/main.py
+app/routes/__init__.py
+app/routes/check_news.py
+app/services/mock_service.py
+app/services/news_service.py
+fake_news_prediction_backend.egg-info/PKG-INFO
+fake_news_prediction_backend.egg-info/SOURCES.txt
+fake_news_prediction_backend.egg-info/dependency_links.txt
+fake_news_prediction_backend.egg-info/requires.txt
+fake_news_prediction_backend.egg-info/top_level.txt
+tests/test_check_news.py
+tests/test_health.py
+tests/test_news_service.py
