@@ -3,7 +3,8 @@ import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/re
 import App from '../App.jsx';
 
 vi.mock('../services/api.js', () => ({
-  checkNews: vi.fn()
+  checkNews: vi.fn(),
+  fetchHistory: vi.fn().mockResolvedValue([])
 }));
 
 const { checkNews } = await import('../services/api.js');

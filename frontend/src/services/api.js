@@ -31,6 +31,9 @@ export async function checkNews(text) {
     });
 
     if (!response.ok) {
+      if (response.status === 429) {
+          throw new Error('Too many requests. Please take a break and try again in a minute.');
+      }
       throw new Error(`Network error: ${response.status}`);
     }
 
@@ -40,6 +43,35 @@ export async function checkNews(text) {
       throw new Error('Request timed out. Please try again.');
     }
     throw error;
+  } finally {
+    clearTimeout(timeout);
+  }
+}
+
+export async function fetchHistory() {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+
+  try {
+    const baseUrl = resolveBaseUrl();
+    const response = await fetch(`${baseUrl}/history`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      signal: controller.signal
+    });
+
+    if (!response.ok) {
+      // Silently fail history fetch or log it, but don't break the app
+      console.warn(`History fetch failed: ${response.status}`);
+      return [];
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.warn('History fetch error:', error);
+    return [];
   } finally {
     clearTimeout(timeout);
   }

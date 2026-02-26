@@ -10,3 +10,4 @@ Requires-Dist: httpx<1.0.0,>=0.27.0
 Requires-Dist: pytest<9.0.0,>=8.2.0
 Requires-Dist: pytest-asyncio<1.0.0,>=0.23.0
 Requires-Dist: respx<1.0.0,>=0.20.2
+Requires-Dist: redis<6.0.0,>=5.0.0

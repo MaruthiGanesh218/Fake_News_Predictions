@@ -6,6 +6,7 @@ import { useState } from 'react';
 import Header from './components/Header.jsx';
 import InputCard from './components/InputCard.jsx';
 import ResultCard from './components/ResultCard.jsx';
+import HistoryList from './components/HistoryList.jsx';
 import { checkNews } from './services/api.js';
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
+  const [submissionCount, setSubmissionCount] = useState(0);
 
   const handleSubmit = async (payload) => {
     const trimmed = payload.trim();
@@ -29,6 +31,7 @@ function App() {
     try {
       const response = await checkNews(trimmed);
       setResult(response);
+      setSubmissionCount(c => c + 1);
     } catch (submissionError) {
       setError(submissionError instanceof Error ? submissionError.message : 'Unknown error occurred.');
     } finally {
@@ -41,13 +44,16 @@ function App() {
       <div className="mx-auto flex min-h-screen max-w-6xl flex-col gap-12 px-6 pb-16 pt-12 lg:px-8">
         <Header />
         <main className="grid grid-cols-1 gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
-          <InputCard
-            value={text}
-            onChange={setText}
-            onSubmit={handleSubmit}
-            isLoading={isLoading}
-            error={error}
-          />
+          <div className="flex flex-col gap-8">
+            <InputCard
+              value={text}
+              onChange={setText}
+              onSubmit={handleSubmit}
+              isLoading={isLoading}
+              error={error}
+            />
+            <HistoryList onSelect={setText} refreshTrigger={submissionCount} />
+          </div>
           <ResultCard result={result} isLoading={isLoading} error={error} />
         </main>
       </div>

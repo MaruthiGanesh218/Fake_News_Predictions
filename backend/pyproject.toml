@@ -21,3 +21,8 @@ dependencies = [
   "respx>=0.20.2,<1.0.0",
   "redis>=5.0.0,<6.0.0"
 ]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["app*"]
+exclude = ["logs", "tests"]

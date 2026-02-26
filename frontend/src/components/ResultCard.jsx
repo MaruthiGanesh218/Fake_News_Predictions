@@ -26,6 +26,12 @@ function ResultCard({ result, isLoading, error }) {
     ? result.notes
     : 'No notes yet.';
 
+  const handleCopy = () => {
+    if (!result) return;
+    const text = `Fake News Checker Result:\nVerdict: ${verdict.toUpperCase()}\nConfidence: ${confidencePct}%\n\nCheck it at: ${window.location.origin}`;
+    navigator.clipboard.writeText(text).catch(err => console.error('Failed to copy: ', err));
+  };
+
   return (
     <section
       className="relative flex min-h-[420px] flex-col gap-6 rounded-3xl border border-slate-800 bg-slate-900/30 p-6 shadow-inner shadow-slate-950/40"
@@ -36,9 +42,20 @@ function ResultCard({ result, isLoading, error }) {
           <h2 className="text-lg font-semibold text-slate-100">Analysis Result</h2>
           <p className="text-sm text-slate-400">Outputs update automatically when the analysis finishes.</p>
         </div>
-        <span className={`rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-widest ${badgeClass}`}>
-          {verdict}
-        </span>
+        <div className="flex items-center gap-3">
+          {result && !isLoading && (
+             <button
+              onClick={handleCopy}
+              className="rounded-full border border-slate-700 bg-slate-800 px-3 py-1 text-xs font-medium text-slate-300 transition hover:bg-slate-700 hover:text-white"
+              title="Copy summary to clipboard"
+             >
+               Copy
+             </button>
+          )}
+          <span className={`rounded-full px-4 py-1 text-xs font-semibold uppercase tracking-widest ${badgeClass}`}>
+            {verdict}
+          </span>
+        </div>
       </header>
 
       {isLoading && (
