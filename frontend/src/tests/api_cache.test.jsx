@@ -29,12 +29,18 @@ describe('App cached responses', () => {
       notes: 'Cached payload from backend test.'
     };
 
-    const fetchMock = vi.spyOn(global, 'fetch').mockImplementation(() =>
-      Promise.resolve({
+    const fetchMock = vi.spyOn(global, 'fetch').mockImplementation((url) => {
+      if (url.includes('/history')) {
+        return Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve([])
+        });
+      }
+      return Promise.resolve({
         ok: true,
         json: () => Promise.resolve(mockPayload)
-      })
-    );
+      });
+    });
 
     render(<App />);
 
@@ -44,13 +50,24 @@ describe('App cached responses', () => {
     const button = screen.getByRole('button', { name: /check news/i });
     fireEvent.click(button);
 
-    await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
+    // Initial load fetches history, then click fetches check-news.
+    // We expect 1 history fetch (on mount) + 1 check-news fetch.
+    // However, depending on timing and React strict mode, history might be fetched twice or more.
+    // The previous test expected 1 call, but we saw 3.
+    // Let's filter calls to check-news for assertion.
+    await waitFor(() => {
+        const calls = fetchMock.mock.calls.filter(call => call[0].includes('/check-news'));
+        expect(calls).toHaveLength(1);
+    });
     expect(await screen.findByText(/Cached payload from backend test/i)).toBeInTheDocument();
 
     // Trigger another submission with the same payload to simulate a cached backend response.
     fireEvent.click(button);
 
-    await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(2));
+    await waitFor(() => {
+        const calls = fetchMock.mock.calls.filter(call => call[0].includes('/check-news'));
+        expect(calls).toHaveLength(2);
+    });
     expect(screen.getByText(/Cached payload from backend test/i)).toBeInTheDocument();
     expect(screen.getByText(/local/i)).toBeInTheDocument();
     expect(screen.queryByText(/Running mock inference/i)).not.toBeInTheDocument();
