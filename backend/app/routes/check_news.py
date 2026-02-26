@@ -8,11 +8,12 @@ from __future__ import annotations
 import logging
 from typing import Any, Optional
 
-from fastapi import APIRouter, Query
+from fastapi import APIRouter, Depends, Query
 from pydantic import BaseModel, Field
 
 from app import config
-from app.services import classifier_service, factcheck_service, news_service
+from app.services import classifier_service, factcheck_service, history_service, news_service
+from app.utils.rate_limit import check_rate_limit
 from app.services.mock_service import analyze_text_mock
 
 router = APIRouter(tags=["analysis"])
@@ -66,12 +67,26 @@ class ClassifierResult(BaseModel):
     explanation: Optional[str] = None
 
 
-@router.post("/check-news", response_model=CheckNewsResponse, status_code=200)
+@router.get("/history", response_model=list[str], status_code=200)
+async def get_history() -> list[str]:
+    """Retrieve recent search queries."""
+    return await history_service.get_recent_searches()
+
+
+@router.post(
+    "/check-news",
+    response_model=CheckNewsResponse,
+    status_code=200,
+    dependencies=[Depends(check_rate_limit)],
+)
 async def check_news(
     payload: CheckNewsRequest,
     refresh: bool = Query(False, description="Force refresh of cached downstream results."),
 ) -> CheckNewsResponse:
     """Return deterministic mock analysis augmented with fact-check and news context."""
+
+    # Add query to history
+    await history_service.add_to_history(payload.text)
 
     response_data: dict[str, Any] = analyze_text_mock(payload.text)
     provider_label = config.NEWS_PROVIDER
