@@ -1,4 +1,5 @@
 import React from 'react';
+import { isSafeUrl } from '../utils/url';
 
 function ArticleCard({ article }) {
   const published = article?.publishedAt ? new Date(article.publishedAt).toLocaleDateString() : null;
@@ -7,9 +8,15 @@ function ArticleCard({ article }) {
 
   return (
     <li className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4 text-sm text-slate-200">
-      <a href={article.url} target="_blank" rel="noopener noreferrer" className="font-semibold text-sky-300 transition hover:text-sky-200">
-        {article.title}
-      </a>
+      {isSafeUrl(article.url) ? (
+        <a href={article.url} target="_blank" rel="noopener noreferrer" className="font-semibold text-sky-300 transition hover:text-sky-200">
+          {article.title}
+        </a>
+      ) : (
+        <span className="font-semibold text-slate-200">
+          {article.title}
+        </span>
+      )}
       <div className="mt-1 text-xs text-slate-400">
         <span>{article.source || 'Unknown source'}</span>
         {published ? <span aria-hidden="true"> | </span> : null}

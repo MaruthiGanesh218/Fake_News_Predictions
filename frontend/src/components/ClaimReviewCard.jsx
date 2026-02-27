@@ -1,4 +1,5 @@
 import React from 'react';
+import { isSafeUrl } from '../utils/url';
 
 function ClaimReviewCard({ claimReview }) {
   if (!claimReview) return null;
@@ -16,11 +17,13 @@ function ClaimReviewCard({ claimReview }) {
       </div>
       {claimReview.claim ? <p className="mt-3 text-sm text-emerald-100">{claimReview.claim}</p> : null}
       {claimReview.excerpts ? <p className="mt-2 text-sm text-emerald-100/90">{claimReview.excerpts}</p> : null}
-      <div className="mt-3">
-        <a href={claimReview.url} target="_blank" rel="noopener noreferrer" className="text-xs font-semibold text-emerald-200">
-          Read full fact-check
-        </a>
-      </div>
+      {isSafeUrl(claimReview.url) && (
+        <div className="mt-3">
+          <a href={claimReview.url} target="_blank" rel="noopener noreferrer" className="text-xs font-semibold text-emerald-200">
+            Read full fact-check
+          </a>
+        </div>
+      )}
     </article>
   );
 }
