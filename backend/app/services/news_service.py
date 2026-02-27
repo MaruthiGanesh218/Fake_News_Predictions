@@ -123,7 +123,7 @@ async def _search_news_newsapi(query: str, limit: int, api_key: str) -> List[Dic
         url=item.get("url"),
         published_at=item.get("publishedAt"),
         snippet=item.get("description") or item.get("content"),
-    ) for item in articles][:limit]
+    ) for item in articles[:limit]]
 
 
 async def _search_news_gnews(query: str, limit: int, api_key: str) -> List[Dict[str, Any]]:
@@ -144,7 +144,7 @@ async def _search_news_gnews(query: str, limit: int, api_key: str) -> List[Dict[
         url=item.get("url"),
         published_at=item.get("publishedAt"),
         snippet=item.get("description"),
-    ) for item in articles][:limit]
+    ) for item in articles[:limit]]
 
 
 async def _search_news_newsdata(query: str, limit: int, api_key: str) -> List[Dict[str, Any]]:
@@ -164,7 +164,7 @@ async def _search_news_newsdata(query: str, limit: int, api_key: str) -> List[Di
         url=item.get("link"),
         published_at=item.get("pubDate"),
         snippet=item.get("description") or item.get("content"),
-    ) for item in articles][:limit]
+    ) for item in articles[:limit]]
 
 
 def _normalise_article(
