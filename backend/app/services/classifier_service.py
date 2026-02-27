@@ -214,13 +214,8 @@ def _classify_locally(text: str, *, reason: Optional[str] = None) -> Dict[str, A
     }
 
 
-async def _clear_cache_for_tests() -> None:
-    await _CLASSIFIER_CACHE.clear()
-
-
 __all__ = [
     "classify_text",
     "MissingCredentialsError",
     "ClassifierServiceError",
-    "_clear_cache_for_tests",
 ]
