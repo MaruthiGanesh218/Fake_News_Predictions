@@ -170,11 +170,6 @@ def _normalise_datetime(value: Any) -> Optional[str]:
     return parsed.isoformat().replace("+00:00", "Z")
 
 
-async def _clear_cache_for_tests() -> None:
-    await _FACTCHECK_CACHE.clear()
-
-
 __all__ = [
     "query_claimreview",
-    "_clear_cache_for_tests",
 ]

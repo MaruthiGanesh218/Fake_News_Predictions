@@ -13,13 +13,14 @@ from httpx import Response
 
 from app import config
 from app.services import factcheck_service
+from app.utils import cache
 
 
 @pytest_asyncio.fixture(autouse=True)
 async def _reset_cache() -> AsyncIterator[None]:
-    await factcheck_service._clear_cache_for_tests()  # noqa: SLF001
+    await cache.clear_registered_caches()
     yield
-    await factcheck_service._clear_cache_for_tests()  # noqa: SLF001
+    await cache.clear_registered_caches()
 
 
 @pytest.mark.asyncio

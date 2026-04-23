@@ -220,13 +220,8 @@ def _filter_articles(articles: Iterable[Dict[str, Any]]) -> List[Dict[str, Any]]
     return filtered
 
 
-async def _clear_cache_for_tests() -> None:
-    await _NEWS_CACHE.clear()
-
-
 __all__ = [
     "search_news",
     "NewsServiceError",
     "MissingCredentialsError",
-    "_clear_cache_for_tests",
 ]
